@@ -3,7 +3,7 @@
 */
 
   // NOTE: ! after String means that the value CANNOT be null
-    // TWO ! in feed => The array !== null and each link !== null
+    // TWO ! in feed -> The array !== null and each link !== null
 
 const typeDefs =`
     type Query {
