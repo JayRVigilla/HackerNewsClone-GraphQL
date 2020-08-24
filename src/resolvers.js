@@ -24,34 +24,42 @@ const resolvers = {
     info: () => `This is the API of a Hacker News Clone`,
     feed: () => links,
     // find link with given id
-    link: (_, { id }, links) => {
-      links.id
+    link: (_, { id }) => {
+      // iterate links
+      // if link.id === id then return that
+      const matchId = links.filter(link => link.id === `link-${id}`);
+      return matchId[0];
     }
   },
   Mutation: {
-    post: (_, args) => {
+    post: (_, { description, url }) => {
       const link = {
         id: `link-${idCount++}`,
-        description: args.description,
-        url: args.url,
+        description: description,
+        url: url,
       }
       links.push(link);
       return link;
     },
-    // complete these
-    updateLink: () => {},
-    deleteLink: () => {}
-  }
-  /**
-   * parent || root -> 'the result of previous resolver level'
-   * meaning feed GETs ALL data from links then runs resolver on each item in links
-   * parent || root is each item inside of links
-   */
-  // Link: {
-  //   id: (parent) => parent.id,
-  //   description: (parent) => parent.description,
-  //   url: (parent) => parent.url,
-  // },
+
+    updateLink: (_, { id, description, url }) => {
+      // create replacement obj from args
+      // find matching linkId
+      // overwrite with replacement obj
+      const updatedLink = { id, description, url }
+      const index = links.findIndex((link) => link.id === `link-${updatedLink.id}`)
+      links[index] = updatedLink;
+      return updatedLink;
+    },
+
+    deleteLink: (_, { id }) => {
+
+      const deleted = {description: `link-${id} deleted`}
+      const index = links.findIndex((link) => link.id === `link-${id}`)
+      links.splice(index, 1);
+      return deleted;
+      }
+    },
 };
 
 module.exports = resolvers;
