@@ -5,12 +5,11 @@
 */
 
 const { GraphQLServer } = require('graphql-yoga');
-// const typeDefs = require('./typeDefs.graphql');
 const resolvers = require('./resolvers');
 
 const server = new GraphQLServer({
   // importing file inline
-  typeDefs: 'src/typeDefs.graphql',
+  typeDefs: 'src/schemas.graphql',
   resolvers,
 })
 server.start( () => console.log(`Server is running on http://localhost:4000`))
